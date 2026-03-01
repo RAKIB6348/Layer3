@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="o_col-6">
+                        <!-- <div class="o_col-6">
                             <separator string="Contact Person Details" class="mt0"/>
                             <div name="capacity_lines_group" class="kio_capacity_layout_fix kio_nttn_capacity_scope">
                                 <field name="contact_person_ids" nolabel="1" class="kio_capacity_one2many">
@@ -138,7 +138,7 @@
                                             class="btn btn-link p-0 kio_capacity_add_line_btn"/>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <group string="Marketing Remarks">

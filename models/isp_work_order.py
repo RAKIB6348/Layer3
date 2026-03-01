@@ -76,6 +76,11 @@ class IspWorkOrder(models.Model):
         'work_order_id',
         string='Billing Cycle'
     )
+    contact_person_ids = fields.One2many(
+        'isp.client.contact',
+        'work_order_id',
+        string='Contact Persons',
+    )
     
     # Document fields
     cheque_image = fields.Binary(string="Cheque Image")
