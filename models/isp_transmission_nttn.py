@@ -34,6 +34,13 @@ class IspTransmissionNTTN(models.Model):
         tracking=True,
         help='MRTG monitoring URL/reference for this transmission.'
     )
+    client_name = fields.Char(string='Client Name', tracking=True)
+    email = fields.Char(string='Email', tracking=True)
+    password = fields.Char(string='Password', tracking=True)
+    password_confirmation = fields.Char(string='Password Confirmation', tracking=True)
+    mobile = fields.Char(string='Mobile', tracking=True)
+    organization_name = fields.Char(string='Organization Name', tracking=True)
+    license_id = fields.Many2one('isp.license', string='License Type', tracking=True)
     p2p_address = fields.Char(
         string='P2P Address',
         tracking=True,
