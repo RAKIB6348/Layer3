@@ -360,6 +360,7 @@ class IspWorkOrder(models.Model):
             line.copy({
                 'transmission_id': nttn.id,
                 'isp_sale_id': False,
+                'survey_id': False,
                 'own_id': False,
             })
 
@@ -368,6 +369,7 @@ class IspWorkOrder(models.Model):
             line.copy({
                 'own_id': own.id,
                 'isp_sale_id': False,
+                'survey_id': False,
                 'transmission_id': False,
             })
 

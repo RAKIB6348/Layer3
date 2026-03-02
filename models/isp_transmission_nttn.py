@@ -371,12 +371,19 @@ class IspTransmissionNTTN(models.Model):
 
     def action_nttn_noc_confirm(self):
         for rec in self:
+            if not rec.password:
+                raise ValidationError(_("Password is required before NOC Confirmation."))
+            if not rec.password_confirmation:
+                raise ValidationError(_("Password Confirmation is required before NOC Confirmation."))
+            if rec.password != rec.password_confirmation:
+                raise ValidationError(_("Password and Confirmation Password do not match."))
             rec._create_or_update_portal_user()
             rec.state = 'noc_confirm'
         return self._action_open_current_record()
 
     def action_nttn_done(self):
         for rec in self:
+            rec._create_or_update_portal_user()
             rec.state = 'done'
         return self._action_open_current_record()
 

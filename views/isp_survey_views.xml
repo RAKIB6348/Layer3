@@ -358,7 +358,7 @@
                                         <div name="capacity_lines_group" class="kio_capacity_layout_fix">
 
                                             <field name="capacity_type_ids" nolabel="1" class="kio_capacity_one2many">
-                                                <tree editable="bottom"
+                                                <tree editable="bottom" create="0"
                                                       class="o_tree_view o_tree_view_compact kio_capacity_tree">
                                                     <field name="type_id"/>
                                                     <field name="capacity" string="MBPS" sum="Data Capacity"
