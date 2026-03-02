@@ -257,7 +257,7 @@
                     <separator string="Actions"/>
                     <div class="d-flex align-items-center justify-content-end gap-5">
                         <button name="action_confirm_work_order" string="Confirm" type="object" class="oe_highlight"
-                                invisible="work_state != 'work_order'"/>
+                                />
                         <field name="work_state" widget="isp_state_duration_statusbar"/>
                     </div>
                 </sheet>

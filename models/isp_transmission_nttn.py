@@ -391,3 +391,11 @@ class IspTransmissionNTTN(models.Model):
             'res_id': self.id,
             'target': 'current',
         }
+        
+    
+    
+    @api.constrains('password', 'password_confirmation')
+    def _check_password_confirmation(self):
+        for rec in self:
+            if rec.password and rec.password != rec.password_confirmation:
+                raise ValidationError(_("Password and Confirmation Password do not match."))
