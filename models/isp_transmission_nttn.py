@@ -2,7 +2,6 @@ from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 
 
-
 class IspTransmissionNTTN(models.Model):
     _name = 'isp.transmission.nttn'
     _description = 'NTTN Transmission'
@@ -288,7 +287,6 @@ class IspTransmissionNTTN(models.Model):
             rec.dur_confirm_to_noc_display = self._format_seconds(sec2) if sec2 else ""
             rec.dur_noc_to_done_display = self._format_seconds(sec3) if sec3 else ""
 
-
     # =========================
     # RESURVEY REPORT (NEW)
     # =========================
@@ -352,27 +350,28 @@ class IspTransmissionNTTN(models.Model):
 
     def action_nttn_confirm(self):
         for rec in self:
-# <<<<<<< Updated upstream
-#             missing = []
-#             if not rec.kam:
-#                 missing.append(_("KAM"))
-# =======
-#             # missing = []
-#             # if not rec.vlan_range:
-#             #     missing.append(_("VLAN Range"))
-#             # if not rec.kam:
-#             #     missing.append(_("KAM"))
-# >>>>>>> Stashed changes
+            # <<<<<<< Updated upstream
+            #             missing = []
+            #             if not rec.kam:
+            #                 missing.append(_("KAM"))
+            # =======
+            #             # missing = []
+            #             # if not rec.vlan_range:
+            #             #     missing.append(_("VLAN Range"))
+            #             # if not rec.kam:
+            #             #     missing.append(_("KAM"))
+            # >>>>>>> Stashed changes
 
-#             # if missing:
-#             #     raise ValidationError(_(
-#             #         "You cannot confirm this record because the following fields are missing:\n- %s"
-#             #     ) % ("\n- ".join(missing)))
+            #             # if missing:
+            #             #     raise ValidationError(_(
+            #             #         "You cannot confirm this record because the following fields are missing:\n- %s"
+            #             #     ) % ("\n- ".join(missing)))
             rec.state = 'confirm'
         return self._action_open_current_record()
 
     def action_nttn_noc_confirm(self):
         for rec in self:
+            rec._create_or_update_portal_user()
             rec.state = 'noc_confirm'
         return self._action_open_current_record()
 
@@ -391,11 +390,43 @@ class IspTransmissionNTTN(models.Model):
             'res_id': self.id,
             'target': 'current',
         }
-        
-    
-    
+
     @api.constrains('password', 'password_confirmation')
     def _check_password_confirmation(self):
         for rec in self:
             if rec.password and rec.password != rec.password_confirmation:
                 raise ValidationError(_("Password and Confirmation Password do not match."))
+            
+            
+
+    def _create_or_update_portal_user(self):
+        self.ensure_one()
+
+        if not self.email:
+            raise ValidationError(_("Email required to create portal user."))
+
+        Users = self.env['res.users'].sudo()
+        portal_group = self.env.ref('base.group_portal')
+
+        # Search user by login (email)
+        user = Users.search([('login', '=', self.email)], limit=1)
+
+        if not user:
+            # Create new portal user
+            user = Users.create({
+                'name': self.client_name or self.organization_name or self.email,
+                'login': self.email,
+                'email': self.email,
+                'groups_id': [(6, 0, [portal_group.id])],
+                'password': self.password or '123456',
+            })
+        else:
+            # Update password if provided
+            if self.password:
+                user.write({'password': self.password})
+
+            # Ensure portal group assigned
+            if portal_group.id not in user.groups_id.ids:
+                user.write({'groups_id': [(4, portal_group.id)]})
+
+        return user

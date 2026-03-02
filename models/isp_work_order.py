@@ -340,9 +340,20 @@ class IspWorkOrder(models.Model):
                 'mobile': mobile.strip(),
             })
 
-        # যদি OWN transmission ও থাকে তাহলে ওটাতেও করো (optional)
-        # own = self.env['isp.transmission.own'].sudo().search([...])
-        # if own: own.write({...})
+        # OWN transmission থাকলে (এবং ফিল্ডগুলো থাকলে) ওটাতেও আপডেট করো
+        own = self.env['isp.transmission.own'].sudo().search([
+            ('seq_id', '=', self.work_order_name)
+        ], limit=1)
+        if own:
+            own_vals = {}
+            if 'client_name' in own._fields:
+                own_vals['client_name'] = client_name.strip()
+            if 'email' in own._fields:
+                own_vals['email'] = email.strip()
+            if 'mobile' in own._fields:
+                own_vals['mobile'] = mobile.strip()
+            if own_vals:
+                own.write(own_vals)
 
     def _copy_capacity_lines_to_nttn(self, nttn):
         for line in self.capacity_type_ids:
@@ -397,18 +408,27 @@ class IspWorkOrder(models.Model):
             own = TransmissionOWN.search([('seq_id', '=', common_vals['seq_id'])], limit=1)
 
             # If OWN model also has client_name/email/mobile → do the same
-            # (assuming it does — adjust field names if different)
-            client_data_own = {
-                'client_name': common_vals.get('client_name', ''),
-                'email': common_vals.get('email', ''),
-                'mobile': common_vals.get('mobile', ''),
-            }
+            client_data_own = {}
+            if 'client_name' in TransmissionOWN._fields:
+                client_data_own['client_name'] = common_vals.get('client_name', '')
+            if 'email' in TransmissionOWN._fields:
+                client_data_own['email'] = common_vals.get('email', '')
+            if 'mobile' in TransmissionOWN._fields:
+                client_data_own['mobile'] = common_vals.get('mobile', '')
 
             if not own:
-                own = TransmissionOWN.create(common_vals)
+                # Filter common vals to only fields defined on OWN model
+                own_vals = {
+                    key: val
+                    for key, val in common_vals.items()
+                    if key in TransmissionOWN._fields
+                }
+                own_vals.update(client_data_own)
+                own = TransmissionOWN.create(own_vals)
                 self._copy_capacity_lines_to_own(own)
             else:
-                own.write(client_data_own)  # update if exists
+                if client_data_own:
+                    own.write(client_data_own)  # update if exists
 
     def action_legal_confirm(self):
         for order in self:
