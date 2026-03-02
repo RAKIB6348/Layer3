@@ -347,6 +347,8 @@ class IspTransmissionNTTN(models.Model):
         self.ensure_one()
         self.env['isp.capacity.type'].create({'transmission_id': self.id})
         return True
+    
+    
 
     def action_nttn_confirm(self):
         for rec in self:
@@ -368,6 +370,10 @@ class IspTransmissionNTTN(models.Model):
             #             #     ) % ("\n- ".join(missing)))
             rec.state = 'confirm'
         return self._action_open_current_record()
+    
+    
+    
+    
 
     def action_nttn_noc_confirm(self):
         for rec in self:
@@ -380,12 +386,20 @@ class IspTransmissionNTTN(models.Model):
             rec._create_or_update_portal_user()
             rec.state = 'noc_confirm'
         return self._action_open_current_record()
+    
+    
+    
+    
 
     def action_nttn_done(self):
         for rec in self:
             rec._create_or_update_portal_user()
             rec.state = 'done'
         return self._action_open_current_record()
+    
+    
+    
+    
 
     def _action_open_current_record(self):
         self.ensure_one()
@@ -397,6 +411,8 @@ class IspTransmissionNTTN(models.Model):
             'res_id': self.id,
             'target': 'current',
         }
+        
+        
 
     @api.constrains('password', 'password_confirmation')
     def _check_password_confirmation(self):

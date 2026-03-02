@@ -13,7 +13,7 @@ class IspClientContact(models.Model):
         ('billing', 'Billing'),
         ('marketing', 'Marketing'),
         ('technical', 'Technical'),
-    ], string="Type", required=True)
+    ], string="Type", required=False)
 
     name = fields.Char(string="Name")
     designation = fields.Char(string="Designation")

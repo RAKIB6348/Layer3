@@ -209,16 +209,21 @@
                                                 </div> -->
                                             </group>
                                         </group>
-                                        <separator string="Contact Person Details" class="mt0"/>
+                                        <separator string="Contact Person Details" class="mt16"/>
                                         <div name="contact_person_lines_group">
                                             <field name="contact_person_ids" nolabel="1">
-                                                <tree editable="bottom" create="1" edit="1" delete="1">
+                                                <tree editable="bottom" create="0" edit="1" delete="1">
                                                     <field name="contact_type" string="Type"/>
                                                     <field name="name"/>
                                                     <field name="mobile"/>
                                                     <field name="email"/>
                                                 </tree>
                                             </field>
+                                            <div class="mt-2" style="text-align:left;">
+                                                <button name="action_add_contact_person_details_line"
+                                                        type="object" string="Add a line"
+                                                        class="btn btn-link p-0 kio_add_contact_person_details_line_btn"/>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="o_col-6">

@@ -243,6 +243,11 @@ class IspWorkOrder(models.Model):
         self.env['isp.billing.cycle'].create({'work_order_id': self.id})
         return True
 
+    def action_add_contact_person_details_line(self):
+        self.ensure_one()
+        self.env['isp.client.contact'].create({'work_order_id': self.id})
+        return True
+
     def action_add_offer_capacity_line(self):
         self.ensure_one()
         if not self.survey_id:

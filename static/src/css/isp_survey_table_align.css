@@ -432,6 +432,19 @@ table tfoot td:nth-child(1) {
     font-size: 0 !important;
 }
 
+/* Contact Person Details: hide empty placeholder rows */
+div[name="contact_person_lines_group"] .o_list_table tbody tr > td[colspan] {
+    padding: 0 !important;
+    border: 0 !important;
+    height: 0 !important;
+    line-height: 0 !important;
+    font-size: 0 !important;
+}
+
+div[name="contact_person_lines_group"] .o_list_table tbody tr:has(> td[colspan]) {
+    display: none !important;
+}
+
 /* Keep status color scheme unchanged; only duration text is highlighted. */
 .o_field_statusbar .kio_statusbar_duration {
     color: #dc3545;
