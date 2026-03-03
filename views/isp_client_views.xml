@@ -179,6 +179,7 @@
             name="Clients"
             action="action_isp_client"
             sequence="2"
+            groups="kio_isp_management.group_isp_marketing_executive,kio_isp_management.group_isp_marketing_head,kio_isp_management.group_isp_admin"
 />
 
 </odoo>
