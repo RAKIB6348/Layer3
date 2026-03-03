@@ -41,6 +41,7 @@
             <form string="Work Order">
                 <header>
                     <button name="action_confirm_work_order" string="Submit" type="object" class="oe_highlight"
+                            groups="kio_isp_management.group_isp_marketing_executive"
                             invisible="work_state != 'work_order'"/>
 
                     <!-- Marketing Group Button -->
