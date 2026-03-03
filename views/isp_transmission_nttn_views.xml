@@ -35,21 +35,21 @@
                             string="Confirm"
                             type="object"
                             class="oe_highlight"
-                            groups="kio_isp_management.group_isp_nttn"
+                            groups="kio_isp_management.group_isp_nttn_access"
                             invisible="state != 'draft'"/>
 
                     <button name="action_nttn_noc_confirm"
                             string="NOC Confirm"
                             type="object"
                             class="oe_highlight"
-                            groups="kio_isp_management.group_isp_noc"
+                            groups="kio_isp_management.group_isp_noc_access"
                             invisible="state != 'confirm'"/>
 
                     <button name="action_nttn_done"
                             string="Done"
                             type="object"
                             class="btn btn-success"
-                            groups="kio_isp_management.group_isp_noc"
+                            groups="kio_isp_management.group_isp_noc_access"
                             invisible="state != 'noc_confirm'"/>
 
                     <field name="state" widget="isp_state_duration_statusbar"/>
@@ -106,7 +106,7 @@
                             <field name="kam"/>
                         </group>
                     </group>
-                    <group string="Client Information" groups="kio_isp_management.group_isp_noc">
+                    <group string="Client Information" groups="kio_isp_management.group_isp_noc_access">
                             <group>
                                 <field name="client_name"/>
                                 <field name="mobile"/>
