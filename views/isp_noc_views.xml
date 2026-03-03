@@ -24,8 +24,7 @@
     <!-- NOC Menu -->
     <menuitem id="menu_isp_noc_management_root"
               name="NOC Management"
-              sequence="7"
-              groups="kio_isp_management.group_isp_noc_access"/>
+              sequence="7"/>
 
     <menuitem id="menu_isp_noc_nttn"
               name="NTTN Transmission"
